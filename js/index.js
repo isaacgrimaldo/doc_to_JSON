@@ -1,49 +1,56 @@
 /*Cargarmos la pagina antes iniciar el js */
-window.onload = () => {
-    form.onsubmit = (e) =>{
-        e.preventDefault();
-        console.log(e);
-    }
-}
-
-
 const form = document.getElementById('set-info');
 const btnFile = document.getElementById('active-file');
 const file = document.getElementById('file');
-const version =  document.getElementById('version').value;
+const showfile = document.getElementById('showfile');
 
+window.onload = () => {
+    getfile();
+    
+    form.onsubmit = (e) =>{
+        e.preventDefault();
+        const file = e.target[0].files[0];
+        const version = e.target[2].value; 
+        getInfo(file , version)
+    }
+
+}
 
 
 /**Optemos el docuemtos */
 const getfile = () => {
 
-    btnFile.onclick = () => {
+    btnFile.onclick = (e) => {
+        e.preventDefault();
         file.click() 
         file.onchange = (e) => { 
-             readFile(e);
+             e.preventDefault();
+             showNameFile(e.target.files[0]);
         }
     }
 }
 
-/*leemos el doc */
-const readFile = (event) =>{
-  const docs =  event.target.files;
-  const file = docs[0];
-  getInfo(file)
+const showNameFile = (file) => {
+    showfile.innerHTML = '';
+    showfile.innerHTML = `
+      <p class="w-75 content-file-name">
+        Archivo a convetir: <br>
+         <strong class="name-file">${file.name}</strong>
+      </p>
+    `;
+
 }
 
 /*sacamos la informacion */
-const getInfo = (data ) =>{
+const getInfo = (data ,  version ) =>{
     const reader = new FileReader(data);
     reader.readAsText(data);
     reader.onload = (e) => {
     const dataRaw = e.target.result;
     const splitName = data.name.split('.');
     const fileName =  splitName[0] + '.json';
-    console.log(splitName); 
-    console.log(version); 
     const info = createJSON({fileName , dataRaw,  version });
-    download(info);
+    download(info , fileName);
   }        
 }
 
@@ -53,17 +60,16 @@ const createJSON = (info) => {
     return json;
 }
 
-const download = (info) => {
+const download = (info,  name) => {
     
-    const element =  document.createElement('a');
-    console.log(info);
-//     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(info.dataRaw));
-//     element.setAttribute('download', info.name);
-        
-//     element.style.display = 'none';
-//     document.body.appendChild(element);
-//     element.click();
-//     document.body.removeChild(element); 
-//     //// Start file download.
-//     download("hello.txt","This is the content of my file :)");
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(info));
+    element.setAttribute('download', name);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
 }

@@ -15,17 +15,21 @@
      </header>
  <form id="set-info">
      <div id="content" class="w-75 p-4">
-         <div class="row w-100 align-items-center">
+         <div class="row w-100 align-items-center" >
              <div class="text-center">
-                 <input type="file" style="display: none" id="file" name="files[]" multiple>
+                 <input type="file" style="display: none" id="file" name="files[]">
                  <button class="btn btn-dark  w-75 p-3" id="active-file">
                      Subir Archivo 
                  </button>
+
+                 <div id="showfile">
+
+                 </div>
              </div>
  
              <div class="text-center m-2 ">
                  <p>Ingrese la version del documento</p>
-                 <input type="number" class="form-control m-auto w-25" id="version" >
+                 <input type="number" class="form-control m-auto w-25" id="version" required >
              </div>
 
              <div class="text-center mt-4">

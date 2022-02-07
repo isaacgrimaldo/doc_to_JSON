@@ -32,3 +32,17 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#020024",endCo
   background-color: gray;
   font-size: 2rem;
 }
+
+.content-file-name{
+    border: solid 2px black;
+    color: white;
+    font-size: 1.2rem;
+    margin: auto;
+    margin-top: 10px;
+    background-color: #00A2E8;
+    border-radius: 15px;
+}
+
+.name-file{
+    color: crimson;
+}
